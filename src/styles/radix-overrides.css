@@ -1,0 +1,51 @@
+
+/* RADIX OVERRIDES - Third-party component styling */
+[data-radix-popper-content-wrapper],
+[data-radix-dropdown-menu-content],
+[data-radix-popover-content],
+[data-radix-dialog-content],
+[data-radix-select-content] {
+  background: hsl(var(--popover)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 4px 12px -4px hsl(var(--foreground) / 0.15) !important;
+  @apply text-popover-foreground;
+  z-index: 50 !important;
+}
+
+/* Enhanced table styling */
+.feature-table {
+  @apply w-full border-collapse;
+}
+
+.feature-table th {
+  @apply table-header;
+  border-bottom: 2px solid hsl(var(--border) / 0.4);
+}
+
+.feature-table td {
+  @apply table-cell;
+  border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.feature-table tr:hover {
+  background: hsl(var(--muted) / 0.2);
+}
+
+/* Enhanced scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.2);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}

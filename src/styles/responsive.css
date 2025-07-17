@@ -1,0 +1,242 @@
+/* PRODUCTION-GRADE RESPONSIVE SYSTEM */
+/* 13" @ 97% fill (1% baseline) → 18" @ 1.25% max → Centered beyond 18" */
+
+/* Base 13-inch (1360px @ 97% of 1440px) - 1% baseline */
+@media (min-width: 1280px) and (max-width: 1360px) {
+  :root {
+    --scale-factor: 1.0;
+    --base-font: 15.52px; /* 97% of 16px */
+    --base-spacing: 0.97rem;
+    --base-radius: 0.485rem;
+    --base-padding: 0.97rem;
+    --header-height: 3.88rem;
+    --sidebar-width: 17.28rem; /* 278px * 0.97 */
+  }
+  
+  html { font-size: var(--base-font); }
+  
+  .responsive-container { max-width: 1360px; width: 97%; margin: 0 auto; }
+  .responsive-spacing { gap: var(--base-spacing); }
+  .responsive-padding { padding: var(--base-padding); }
+  .responsive-margin { margin: var(--base-spacing); }
+}
+
+/* Proportional scaling 13" to 18" (1360px to 1920px) */
+@media (min-width: 1361px) and (max-width: 1920px) {
+  :root {
+    --scale-factor: calc(1.0 + 0.25 * ((100vw - 1360px) / (1920px - 1360px)));
+    --base-font: calc(15.52px + (20px - 15.52px) * ((100vw - 1360px) / (1920px - 1360px)));
+    --base-spacing: calc(0.97rem + (1.25rem - 0.97rem) * ((100vw - 1360px) / (1920px - 1360px)));
+    --base-radius: calc(0.485rem + (0.625rem - 0.485rem) * ((100vw - 1360px) / (1920px - 1360px)));
+    --base-padding: calc(0.97rem + (1.25rem - 0.97rem) * ((100vw - 1360px) / (1920px - 1360px)));
+    --header-height: calc(3.88rem + (5rem - 3.88rem) * ((100vw - 1360px) / (1920px - 1360px)));
+    --sidebar-width: calc(17.28rem + (22.5rem - 17.28rem) * ((100vw - 1360px) / (1920px - 1360px)));
+  }
+  
+  html { font-size: var(--base-font); }
+  
+  .responsive-container { 
+    max-width: calc(1360px + (1920px - 1360px) * ((100vw - 1360px) / (1920px - 1360px))); 
+    width: 100%; 
+    margin: 0 auto; 
+  }
+  .responsive-spacing { gap: var(--base-spacing); }
+  .responsive-padding { padding: var(--base-padding); }
+  .responsive-margin { margin: var(--base-spacing); }
+}
+
+/* Fixed max at 18" (1920px) with centering beyond */
+@media (min-width: 1921px) {
+  :root {
+    --scale-factor: 1.25;
+    --base-font: 20px; /* 1.25% max */
+    --base-spacing: 1.25rem;
+    --base-radius: 0.625rem;
+    --base-padding: 1.25rem;
+    --header-height: 5rem;
+    --sidebar-width: 22.5rem; /* 360px at max scale */
+  }
+  
+  html { font-size: var(--base-font); }
+  
+  /* Force centering and max width */
+  .app-container {
+    max-width: 1920px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+  
+  body {
+    background: hsl(var(--muted) / 0.3) !important;
+  }
+
+}
+
+/* Universal responsive classes */
+.responsive-text-xs { font-size: calc(var(--base-font) * 0.75); }
+.responsive-text-sm { font-size: calc(var(--base-font) * 0.875); }
+.responsive-text-base { font-size: var(--base-font); }
+.responsive-text-lg { font-size: calc(var(--base-font) * 1.125); }
+.responsive-text-xl { font-size: calc(var(--base-font) * 1.25); }
+.responsive-text-2xl { font-size: calc(var(--base-font) * 1.5); }
+.responsive-text-3xl { font-size: calc(var(--base-font) * 1.875); }
+
+/* Card system */
+.responsive-card {
+  padding: var(--base-padding);
+  border-radius: var(--base-radius);
+  gap: var(--base-spacing);
+}
+
+/* Button system */
+.responsive-btn {
+  padding: calc(var(--base-spacing) * 0.5) var(--base-spacing);
+  border-radius: var(--base-radius);
+  font-size: var(--base-font);
+  height: calc(var(--base-spacing) * 2.5);
+}
+
+.responsive-btn-sm {
+  padding: calc(var(--base-spacing) * 0.375) calc(var(--base-spacing) * 0.75);
+  font-size: calc(var(--base-font) * 0.875);
+  height: calc(var(--base-spacing) * 2);
+}
+
+.responsive-btn-lg {
+  padding: calc(var(--base-spacing) * 0.75) calc(var(--base-spacing) * 1.5);
+  font-size: calc(var(--base-font) * 1.125);
+  height: calc(var(--base-spacing) * 3);
+}
+
+/* Form elements */
+.responsive-input {
+  padding: calc(var(--base-spacing) * 0.5) calc(var(--base-spacing) * 0.75);
+  border-radius: var(--base-radius);
+  font-size: var(--base-font);
+  height: calc(var(--base-spacing) * 2.5);
+}
+
+/* Layout spacing */
+.responsive-gap-1 { gap: calc(var(--base-spacing) * 0.25); }
+.responsive-gap-2 { gap: calc(var(--base-spacing) * 0.5); }
+.responsive-gap-3 { gap: calc(var(--base-spacing) * 0.75); }
+.responsive-gap-4 { gap: var(--base-spacing); }
+.responsive-gap-6 { gap: calc(var(--base-spacing) * 1.5); }
+.responsive-gap-8 { gap: calc(var(--base-spacing) * 2); }
+
+.responsive-p-1 { padding: calc(var(--base-spacing) * 0.25); }
+.responsive-p-2 { padding: calc(var(--base-spacing) * 0.5); }
+.responsive-p-3 { padding: calc(var(--base-spacing) * 0.75); }
+.responsive-p-4 { padding: var(--base-spacing); }
+.responsive-p-6 { padding: calc(var(--base-spacing) * 1.5); }
+.responsive-p-8 { padding: calc(var(--base-spacing) * 2); }
+
+.responsive-m-1 { margin: calc(var(--base-spacing) * 0.25); }
+.responsive-m-2 { margin: calc(var(--base-spacing) * 0.5); }
+.responsive-m-3 { margin: calc(var(--base-spacing) * 0.75); }
+.responsive-m-4 { margin: var(--base-spacing); }
+.responsive-m-6 { margin: calc(var(--base-spacing) * 1.5); }
+.responsive-m-8 { margin: calc(var(--base-spacing) * 2); }
+
+/* Content width constraints with left alignment */
+.content-container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0;
+  padding-left: 2rem;
+}
+
+/* Center align only the main layout container */
+.layout-container {
+  display: flex;
+  justify-content: flex-start; /* Left align the content */
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Ensure content doesn't expand beyond 18 inches */
+@media (min-width: 1921px) {
+  .layout-container {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+  
+  .content-container {
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Animation helpers */
+.transition-height {
+  transition: height 0.3s ease;
+}
+
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.subtle-shadow {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.subtle-shadow:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Personal Settings and Account Settings specific styles */
+.settings-container {
+  max-width: 1200px; /* Slightly smaller for better readability */
+}
+
+.settings-card {
+  transition: all 0.3s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Profile page specific styles */
+.profile-container {
+  max-width: 1000px;
+}
+
+.profile-avatar {
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .settings-card,
+  .profile-avatar {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-elegant,
+  .card-premium {
+    border: 2px solid;
+  }
+  
+  .btn-elegant,
+  .btn-elegant-secondary {
+    border: 2px solid;
+  }
+}

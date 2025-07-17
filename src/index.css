@@ -1,0 +1,277 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import responsive system */
+@import './styles/responsive.css';
+
+/* PRODUCTION-GRADE DUAL THEME SYSTEM */
+@layer base {
+  :root {
+    /* Base Design Tokens */
+    --radius: var(--base-radius, 0.5rem);
+    
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Light Theme - High Contrast WCAG AAA Compliant */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 25%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --border: 0 0% 87%;
+    --input: 0 0% 96%;
+    --primary: 220 91% 37%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 9%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 91% 37%;
+    --destructive: 0 84% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 220 91% 37%;
+    --success: 120 61% 34%;
+    --success-foreground: 0 0% 98%;
+    --warning: 38 92% 45%;
+    --warning-foreground: 0 0% 9%;
+    --chart-1: 220 91% 37%;
+    --chart-2: 120 61% 34%;
+    --chart-3: 38 92% 45%;
+    --chart-4: 0 84% 40%;
+    --chart-5: 280 65% 47%;
+  }
+
+  /* Dark Theme - High Contrast WCAG AAA Compliant */
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 96%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+    --border: 0 0% 18%;
+    --input: 0 0% 12%;
+    --primary: 220 91% 65%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
+    --accent: 0 0% 18%;
+    --accent-foreground: 220 91% 65%;
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 9%;
+    --ring: 220 91% 65%;
+    --success: 120 61% 60%;
+    --success-foreground: 0 0% 9%;
+    --warning: 38 92% 70%;
+    --warning-foreground: 0 0% 9%;
+    --chart-1: 220 91% 65%;
+    --chart-2: 120 61% 60%;
+    --chart-3: 38 92% 70%;
+    --chart-4: 0 84% 65%;
+    --chart-5: 280 65% 70%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  /* Ensure app container centers properly on large screens */
+  .app-container {
+    background: hsl(var(--background));
+    box-shadow: 0 0 0 1px hsl(var(--border) / 0.1);
+  }
+}
+
+@layer components {
+  /* ULTRA-SIMPLIFIED COMPONENTS - ZERO GPU ANIMATIONS */
+  
+  /* High contrast buttons */
+  button[data-variant="default"],
+  .btn-primary {
+    background: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    border: none !important;
+    font-weight: 600 !important;
+  }
+  
+  button[data-variant="default"]:hover,
+  .btn-primary:hover {
+    background: hsl(var(--primary) / 0.9) !important;
+  }
+
+  button[data-variant="destructive"] {
+    background: hsl(var(--destructive)) !important;
+    color: hsl(var(--destructive-foreground)) !important;
+  }
+
+  button[data-variant="outline"] {
+    background: hsl(var(--background)) !important;
+    color: hsl(var(--foreground)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+
+  button[data-variant="secondary"] {
+    background: hsl(var(--secondary)) !important;
+    color: hsl(var(--secondary-foreground)) !important;
+  }
+
+  /* High contrast cards */
+  .card {
+    background: hsl(var(--card)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 2px 4px hsl(var(--foreground) / 0.1) !important;
+  }
+
+  /* Static sidebar items - NO ANIMATIONS */
+  .sidebar-item-v1 {
+    @apply flex items-center gap-2.5 px-3 py-2 rounded-xl font-medium;
+    color: hsl(var(--muted-foreground)) !important;
+    min-height: 40px !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .sidebar-item-v1:hover {
+    background: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+    border: none !important;
+  }
+
+  .sidebar-item-v1.active {
+    background: hsl(var(--primary) / 0.1) !important;
+    color: hsl(var(--primary)) !important;
+    border: 2px solid hsl(var(--primary) / 0.3) !important;
+    font-weight: 700 !important;
+  }
+
+  /* MAXIMUM Z-INDEX MODALS AND DROPDOWNS */
+  [data-radix-popover-content],
+  [data-radix-dropdown-menu-content],
+  [data-radix-dialog-content],
+  [data-radix-tooltip-content],
+  [data-radix-select-content] {
+    background: hsl(var(--popover)) !important;
+    color: hsl(var(--popover-foreground)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+    box-shadow: 0 12px 32px hsl(var(--foreground) / 0.2) !important;
+    z-index: 99999 !important;
+  }
+
+  /* Dialog overlays with MAXIMUM z-index */
+  [data-radix-dialog-overlay] {
+    background: hsl(var(--background) / 0.85) !important;
+    z-index: 99998 !important;
+  }
+
+  /* Ensure Select dropdowns are always on top */
+  [data-radix-select-viewport] {
+    z-index: 99999 !important;
+  }
+
+  /* High contrast inputs */
+  input, textarea, select {
+    background: hsl(var(--input)) !important;
+    color: hsl(var(--foreground)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: hsl(var(--primary)) !important;
+    outline: 2px solid hsl(var(--primary) / 0.3) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Charts with high contrast */
+  .recharts-wrapper {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .recharts-cartesian-axis-tick-value {
+    fill: hsl(var(--muted-foreground)) !important;
+  }
+
+  .recharts-legend-item-text {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Fixed header styling with maximum z-index */
+  .sticky-header {
+    background: hsl(var(--background)) !important;
+    border-bottom: 1px solid hsl(var(--border)) !important;
+    z-index: 9999 !important;
+  }
+
+  /* Pagination controls visibility */
+  .pagination-select [data-radix-select-content] {
+    z-index: 99999 !important;
+    background: hsl(var(--popover)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+}
+
+/* Maximum z-index utilities */
+@layer utilities {
+  .z-modal {
+    z-index: 99999;
+  }
+  
+  .z-overlay {
+    z-index: 99998;
+  }
+  
+  .z-dropdown {
+    z-index: 99997;
+  }
+  
+  .z-header {
+    z-index: 9999;
+  }
+  
+  /* Force all modals and dropdowns to maximum z-index */
+  .z-maximum {
+    z-index: 99999 !important;
+  }
+}
+
+/* MAXIMUM ACCESSIBILITY & CONTRAST */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --border: 0 0% 50% !important;
+    --foreground: 0 0% 0% !important;
+    --background: 0 0% 100% !important;
+  }
+  
+  .dark {
+    --border: 0 0% 70% !important;
+    --foreground: 0 0% 100% !important;
+    --background: 0 0% 0% !important;
+  }
+  
+  .card, button, input, textarea, select {
+    border-width: 3px !important;
+  }
+}

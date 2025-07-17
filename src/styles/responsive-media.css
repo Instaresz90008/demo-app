@@ -1,0 +1,56 @@
+
+/* RESPONSIVE MEDIA QUERIES - Accessibility and device handling */
+@media (max-width: 768px) {
+  .glass-card,
+  .glass-card-strong {
+    backdrop-filter: blur(6px);
+  }
+  
+  .dropdown-content,
+  .popover-content {
+    backdrop-filter: blur(8px);
+  }
+  
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+/* Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-scale-in,
+  .card-elevated,
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost,
+  .input-base,
+  .table-row {
+    animation: none;
+    transition: none;
+  }
+  
+  .card-elevated:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-base,
+  .glass-card,
+  .glass-card-strong {
+    border-width: 2px;
+    backdrop-filter: none;
+  }
+  
+  .dropdown-content,
+  .popover-content {
+    backdrop-filter: none;
+    background: hsl(var(--popover)) !important;
+  }
+}

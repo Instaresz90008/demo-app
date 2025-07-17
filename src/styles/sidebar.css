@@ -1,0 +1,19 @@
+
+.sidebar-item {
+  @apply flex items-center gap-1.5 rounded-md px-2 py-1.5 text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors;
+  font-size: 0.9em;
+}
+
+.sidebar-item.active {
+  @apply bg-primary/10 text-primary font-medium;
+}
+
+.sidebar-item svg {
+  @apply shrink-0;
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.sidebar-item span {
+  font-size: 0.9em;
+}

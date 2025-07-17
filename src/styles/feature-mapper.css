@@ -1,0 +1,24 @@
+
+.feature-table {
+  @apply w-full border-collapse;
+}
+
+.feature-table th {
+  @apply border-b border-border px-4 py-3 text-left text-sm font-medium text-muted-foreground;
+}
+
+.feature-table .table-row {
+  @apply border-b border-border hover:bg-muted/50 transition-colors;
+}
+
+.feature-table .table-cell {
+  @apply px-4 py-3 text-sm;
+}
+
+.btn-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-colors;
+}
+
+.input-base {
+  @apply border border-input bg-background text-foreground;
+}
