@@ -12,7 +12,7 @@ export interface User {
   primaryRole?: 'end_user' | 'admin' | 'org_admin' | 'platform_admin';
   avatar?: string;
 }
-
+ const API_URL = import.meta.env.VITE_API_URL;
 export interface LoginCredentials {
   email: string;
   password: string;
@@ -234,7 +234,7 @@ export interface LoginCredentials {
 
 
 
- const API_URL = import.meta.env.VITE_API_URL;
+
 export const authService = {
  
 
@@ -254,14 +254,14 @@ export const authService = {
   },
 
   logout: async (): Promise<void> => {
-    await fetch('/api/authD/logout', {
+    await fetch(`${API_URL}/api/authD/logout`, {
       method: 'POST',
       credentials: 'include'
     });
   },
 
   getCurrentUser: async (): Promise<User | null> => {
-    const res = await fetch('/api/authD/me', {
+    const res = await fetch(`${API_URL}/api/authD/me`, {
       credentials: 'include'
     });
     if (!res.ok) return null;

@@ -6,6 +6,7 @@ import { UnifiedCapabilities, FeatureCheck, PlanTier } from '@/types/unified-acc
 
 export const useUnifiedAccessControl = () => {
   const { user } = useAuth();
+  console.log('useUnifiedAccessControl: User:', user);
 
   const getCapabilities = useCallback((): UnifiedCapabilities | null => {
     if (!user) return null;

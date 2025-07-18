@@ -7,13 +7,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 
 
-const API_URL=import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 
 // GPU-optimized particle system
 const ParticleSystem = ({ isActive, formProgress }) => {
-   
+
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const particlesRef = useRef([]);
@@ -51,14 +51,14 @@ const ParticleSystem = ({ isActive, formProgress }) => {
     // GPU-optimized animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-      
+
       const intensity = isActive ? 1 : 0.3;
       const progressMultiplier = 1 + (formProgress / 100) * 2;
 
       particlesRef.current.forEach((particle) => {
         particle.x += particle.vx * intensity * progressMultiplier;
         particle.y += particle.vy * intensity * progressMultiplier;
-        
+
         if (particle.x < 0) particle.x = canvas.offsetWidth;
         if (particle.x > canvas.offsetWidth) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.offsetHeight;
@@ -141,8 +141,8 @@ const FloatingElements = ({ isTyping, formProgress }) => {
             ease: "easeInOut",
           }}
         >
-          <element.icon 
-            size={element.size} 
+          <element.icon
+            size={element.size}
             className="text-white/20"
             style={{
               filter: `hue-rotate(${formProgress * 3.6}deg)`,
@@ -156,13 +156,13 @@ const FloatingElements = ({ isTyping, formProgress }) => {
 };
 
 const EnhancedLogin = () => {
-    interface ErrorType {
-        email?: string;
-        password?: string;
-        submit?: string;
-}
+  interface ErrorType {
+    email?: string;
+    password?: string;
+    submit?: string;
+  }
 
- const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuth();
   // State management
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -174,13 +174,13 @@ const EnhancedLogin = () => {
   const [showPasswordInfo, setShowPasswordInfo] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [formData, setFormData] = useState({ email: '', password: '' });
- const [errors, setErrors] = useState<ErrorType>({});
+  const [errors, setErrors] = useState<ErrorType>({});
   const navigate = useNavigate();
 
 
   if (isAuthenticated) {
-      return <Navigate to="/dashboard" replace />;
-    }
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const shouldReduceMotion = useReducedMotion();
 
@@ -240,14 +240,14 @@ const EnhancedLogin = () => {
   };
 
   const clientValidatePassword = (password) => {
-    
+
     const checks = {
       length: password.length >= 8 && password.length <= 28,
-      uppercase: /[A-Z]/.test(password),
-      lowercase: /[a-z]/.test(password),
-      number: /[0-9]/.test(password),
-      special: /[_$.!]/.test(password),
-      allowed: /^[a-zA-Z0-9_$.!]+$/.test(password)
+      uppercase: /(?=.*[A-Z])/.test(password),
+      lowercase: /(?=.*[a-z])/.test(password),
+      number: /(?=.*\d)/.test(password),
+      special: /(?=.*[!@#$%^&*(),.?":{}|<>])/.test(password),
+      allowed: /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]+$/.test(password)
     };
 
     const strengthScore = Object.values(checks).filter(Boolean).length;
@@ -257,7 +257,7 @@ const EnhancedLogin = () => {
     if (!checks.lowercase) return { valid: false, message: 'Add at least 1 lowercase letter', strength: strengthScore };
     if (!checks.number) return { valid: false, message: 'Add at least 1 number', strength: strengthScore };
     if (!checks.special) return { valid: false, message: 'Add at least 1 special character (_ $ ! .)', strength: strengthScore };
-    if (!checks.allowed) return { valid: false, message: 'Only letters, numbers, and _ $ ! . are allowed', strength: strengthScore };
+    if (!checks.allowed) return { valid: false, message: 'Only letters, numbers, and !@#$%^&*(),.?":{}|<> . are allowed', strength: strengthScore };
 
     return { valid: true, message: '', strength: strengthScore };
   };
@@ -285,13 +285,13 @@ const EnhancedLogin = () => {
   const handleInputChange = (e) => {
     setIsTyping(true);
     const { name, value } = e.target;
-    
+
     setFormData(prev => ({ ...prev, [name]: value }));
     // if (authError) {
     //   clearError();
     //   setErrors(prev => ({ ...prev, submit: '' }));
     // }
-    
+
     // Real-time validation
     const newErrors = { ...errors };
     if (name === 'email') {
@@ -301,7 +301,7 @@ const EnhancedLogin = () => {
       const validation = clientValidatePassword(value);
       newErrors.password = validation.valid ? '' : validation.message;
     }
-    
+
     setErrors(newErrors);
     setTimeout(() => setIsTyping(false), 1000);
   };
@@ -317,7 +317,7 @@ const EnhancedLogin = () => {
     // In a real app, this would navigate to /forgot-password
     console.log('Navigate to forgot password page');
     alert('Redirecting to forgot password page...');
-     navigate('/forgot-password');
+    navigate('/forgot-password');
   };
 
   const handleSocialLogin = (provider) => {
@@ -330,7 +330,7 @@ const EnhancedLogin = () => {
     // Validate form
     const emailValidation = clientValidateEmail(formData.email);
     const passwordValidation = clientValidatePassword(formData.password);
-    
+
     if (!emailValidation.valid || !passwordValidation.valid) {
       setErrors({
         email: emailValidation.message,
@@ -338,7 +338,7 @@ const EnhancedLogin = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
     // console.log('Submitting login form with:', formData);
     // try{
@@ -350,25 +350,26 @@ const EnhancedLogin = () => {
     //         body: JSON.stringify(formData),
     //         credentials: 'include'
     //     });
-    try{
-        const response = await login(formData);
-        console.log('Login successful, navigating to dashboard');
-        navigate('/dashboard');}
-        catch(error){
-            console.log(error);
-        }
-        
+    try {
+      const response = await login(formData);
+      console.log('Login successful, navigating to dashboard');
+      navigate('/dashboard');
     }
-    
-    // Simulate API call
-    // try {
-    //   await new Promise(resolve => setTimeout(resolve, 2000));
-    //   console.log('Login successful:', formData);
-    // } catch (error) {
-    //   setErrors({ submit: 'Login failed. Please try again.' });
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  // Simulate API call
+  // try {
+  //   await new Promise(resolve => setTimeout(resolve, 2000));
+  //   console.log('Login successful:', formData);
+  // } catch (error) {
+  //   setErrors({ submit: 'Login failed. Please try again.' });
+  // } finally {
+  //   setIsSubmitting(false);
+  // }
 
   // Loading screen
   if (isPageLoading) {
@@ -408,12 +409,12 @@ const EnhancedLogin = () => {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col lg:flex-row bg-slate-50 relative overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Left Panel - Enhanced Form */}
-      <motion.div 
+      <motion.div
         className="w-full lg:w-1/2 flex justify-center items-center p-4 sm:p-8 order-1 bg-white relative z-10"
         animate={{ scale: formScale }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
@@ -446,15 +447,15 @@ const EnhancedLogin = () => {
                 className="text-sm text-gray-600 mt-2 font-medium"
                 animate={{ color: formProgress === 100 ? '#059669' : '#6b7280' }}
               >
-                {formProgress < 30 ? "Getting started..." : 
-                 formProgress < 70 ? "Looking good..." : 
-                 formProgress < 100 ? "Almost there..." : "✨ Ready to sign in!"}
+                {formProgress < 30 ? "Getting started..." :
+                  formProgress < 70 ? "Looking good..." :
+                    formProgress < 100 ? "Almost there..." : "✨ Ready to sign in!"}
               </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <motion.div 
+        <motion.div
           className="w-full max-w-md"
           style={{ willChange: 'transform' }}
         >
@@ -462,15 +463,15 @@ const EnhancedLogin = () => {
           <motion.div className="text-center mb-8">
             <motion.div
               className="w-20 h-20 bg-gradient-to-br from-purple-600 via-pink-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 cursor-pointer relative overflow-hidden"
-              whileHover={{ 
-                scale: 1.1, 
+              whileHover={{
+                scale: 1.1,
                 rotate: [0, -5, 5, 0],
                 boxShadow: "0 20px 40px rgba(147, 51, 234, 0.4)"
               }}
               whileTap={{ scale: 0.95 }}
               animate={{
-                boxShadow: isTyping 
-                  ? "0 0 30px rgba(147, 51, 234, 0.6)" 
+                boxShadow: isTyping
+                  ? "0 0 30px rgba(147, 51, 234, 0.6)"
                   : "0 10px 30px rgba(0,0,0,0.15)"
               }}
               style={{ willChange: 'transform, box-shadow' }}
@@ -478,7 +479,7 @@ const EnhancedLogin = () => {
               <Calendar className="w-10 h-10 text-white relative z-10" />
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
-                animate={{ 
+                animate={{
                   scale: isTyping ? [1, 1.2, 1] : 1,
                   opacity: isTyping ? [0.3, 0.6, 0.3] : 0.3
                 }}
@@ -504,8 +505,8 @@ const EnhancedLogin = () => {
               }}
             >
               {focusedField === 'email' ? "✉️ Let's verify your identity" :
-               focusedField === 'password' ? "🔐 Enter your secure passphrase" :
-               "Sign in to your premium workspace"}
+                focusedField === 'password' ? "🔐 Enter your secure passphrase" :
+                  "Sign in to your premium workspace"}
             </motion.p>
           </motion.div>
 
@@ -551,11 +552,11 @@ const EnhancedLogin = () => {
                   placeholder="Enter your email address"
                   className="w-full pl-12 pr-4 py-4 text-lg border-2 rounded-xl outline-none transition-all duration-300 bg-white"
                   style={{
-                    borderColor: errors.email ? '#ef4444' : 
-                                focusedField === 'email' ? '#8b5cf6' : '#e5e7eb',
+                    borderColor: errors.email ? '#ef4444' :
+                      focusedField === 'email' ? '#8b5cf6' : '#e5e7eb',
                     backgroundColor: errors.email ? '#fef2f2' : 'white',
-                    boxShadow: focusedField === 'email' 
-                      ? '0 0 0 4px rgba(139, 92, 246, 0.1)' 
+                    boxShadow: focusedField === 'email'
+                      ? '0 0 0 4px rgba(139, 92, 246, 0.1)'
                       : '0 1px 3px rgba(0,0,0,0.1)',
                     willChange: 'border-color, box-shadow'
                   }}
@@ -635,11 +636,11 @@ const EnhancedLogin = () => {
                   placeholder="Enter your password"
                   className="w-full pl-12 pr-12 py-4 text-lg border-2 rounded-xl outline-none transition-all duration-300"
                   style={{
-                    borderColor: errors.password ? '#ef4444' : 
-                                focusedField === 'password' ? '#8b5cf6' : '#e5e7eb',
+                    borderColor: errors.password ? '#ef4444' :
+                      focusedField === 'password' ? '#8b5cf6' : '#e5e7eb',
                     backgroundColor: errors.password ? '#fef2f2' : 'white',
-                    boxShadow: focusedField === 'password' 
-                      ? '0 0 0 4px rgba(139, 92, 246, 0.1)' 
+                    boxShadow: focusedField === 'password'
+                      ? '0 0 0 4px rgba(139, 92, 246, 0.1)'
                       : '0 1px 3px rgba(0,0,0,0.1)',
                     willChange: 'border-color, box-shadow'
                   }}
@@ -672,11 +673,11 @@ const EnhancedLogin = () => {
                           key={level}
                           className="h-2 flex-1 rounded-full"
                           animate={{
-                            backgroundColor: strength >= level 
-                              ? strength <= 2 ? '#ef4444' 
-                                : strength <= 3 ? '#eab308' 
-                                : strength <= 4 ? '#3b82f6' 
-                                : '#10b981'
+                            backgroundColor: strength >= level
+                              ? strength <= 2 ? '#ef4444'
+                                : strength <= 3 ? '#eab308'
+                                  : strength <= 4 ? '#3b82f6'
+                                    : '#10b981'
                               : '#e5e7eb'
                           }}
                           transition={{ delay: level * 0.1 }}
@@ -687,9 +688,9 @@ const EnhancedLogin = () => {
                   <p className="text-xs text-gray-600">
                     Password strength: {
                       !formData.password ? 'None' :
-                      (clientValidatePassword(formData.password).strength || 0) <= 2 ? 'Weak' :
-                      (clientValidatePassword(formData.password).strength || 0) <= 3 ? 'Fair' :
-                      (clientValidatePassword(formData.password).strength || 0) <= 4 ? 'Good' : 'Excellent'
+                        (clientValidatePassword(formData.password).strength || 0) <= 2 ? 'Weak' :
+                          (clientValidatePassword(formData.password).strength || 0) <= 3 ? 'Fair' :
+                            (clientValidatePassword(formData.password).strength || 0) <= 4 ? 'Good' : 'Excellent'
                     }
                   </p>
                 </motion.div>
@@ -716,32 +717,32 @@ const EnhancedLogin = () => {
               onClick={handleSubmit}
               className="w-full py-4 text-lg font-semibold text-white rounded-xl relative overflow-hidden group"
               style={{
-                background: isSubmitting 
-                  ? 'linear-gradient(135deg, #a855f7, #6366f1)' 
+                background: isSubmitting
+                  ? 'linear-gradient(135deg, #a855f7, #6366f1)'
                   : 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
                 willChange: 'transform, box-shadow'
               }}
-              whileHover={!isSubmitting ? { 
-                scale: 1.02, 
-                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)" 
+              whileHover={!isSubmitting ? {
+                scale: 1.02,
+                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)"
               } : {}}
               whileTap={!isSubmitting ? { scale: 0.98 } : {}}
               animate={{
-                boxShadow: formProgress === 100 
-                  ? "0 0 40px rgba(139, 92, 246, 0.6)" 
+                boxShadow: formProgress === 100
+                  ? "0 0 40px rgba(139, 92, 246, 0.6)"
                   : "0 4px 20px rgba(0,0,0,0.1)"
               }}
             >
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
                 animate={{ x: isSubmitting ? ['-100%', '100%'] : '-100%' }}
-                transition={{ 
-                  duration: 1.5, 
+                transition={{
+                  duration: 1.5,
                   repeat: isSubmitting ? Infinity : 0,
                   ease: "easeInOut"
                 }}
               />
-              
+
               <span className="relative z-10 flex items-center justify-center">
                 {isSubmitting ? (
                   <>
@@ -795,7 +796,7 @@ const EnhancedLogin = () => {
           </div>
 
           {/* Sign up link */}
-          <motion.div 
+          <motion.div
             className="text-center mt-8"
             animate={{ y: isTyping ? -5 : 0 }}
           >
@@ -804,7 +805,7 @@ const EnhancedLogin = () => {
               className="text-purple-600 hover:text-purple-700 font-semibold"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleCreateAccount}
+              onClick={() => navigate('/register_v1')}
             >
               Create one now →
             </motion.button>
@@ -813,7 +814,7 @@ const EnhancedLogin = () => {
       </motion.div>
 
       {/* Right Panel - Enhanced Experience */}
-      <motion.div 
+      <motion.div
         className="w-full lg:w-1/2 relative min-h-[60vh] lg:min-h-screen order-2 overflow-hidden"
         animate={{
           background: `linear-gradient(135deg, ${experienceSteps[currentStep].gradient})`
@@ -823,7 +824,7 @@ const EnhancedLogin = () => {
       >
         {/* Particle System */}
         <ParticleSystem isActive={isTyping || formProgress > 50} formProgress={formProgress} />
-        
+
         {/* Floating Elements */}
         <FloatingElements isTyping={isTyping} formProgress={formProgress} />
 
@@ -847,9 +848,9 @@ const EnhancedLogin = () => {
             >
               {experienceSteps.map((step, index) => (
                 <div key={index} className="w-full flex-shrink-0 pr-8">
-                  <motion.h2 
+                  <motion.h2
                     className="text-4xl lg:text-5xl font-bold mb-4 leading-tight"
-                    animate={{ 
+                    animate={{
                       opacity: currentStep === index ? 1 : 0.3,
                       y: currentStep === index ? 0 : 20
                     }}
@@ -857,9 +858,9 @@ const EnhancedLogin = () => {
                   >
                     {step.title}
                   </motion.h2>
-                  <motion.p 
+                  <motion.p
                     className="text-xl text-white/90 mb-6"
-                    animate={{ 
+                    animate={{
                       opacity: currentStep === index ? 1 : 0.3,
                       y: currentStep === index ? 0 : 20
                     }}
@@ -869,7 +870,7 @@ const EnhancedLogin = () => {
                   </motion.p>
                   <motion.div
                     className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
-                    animate={{ 
+                    animate={{
                       opacity: currentStep === index ? 1 : 0.3,
                       scale: currentStep === index ? 1 : 0.9
                     }}
@@ -900,7 +901,7 @@ const EnhancedLogin = () => {
           </div>
 
           {/* Enhanced Stats */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-3 gap-6 mb-12"
             animate={{ y: formProgress > 50 ? -10 : 0 }}
           >
@@ -912,8 +913,8 @@ const EnhancedLogin = () => {
               <motion.div
                 key={stat.label}
                 className="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10"
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   backgroundColor: "rgba(255,255,255,0.1)",
                   borderColor: "rgba(255,255,255,0.3)"
                 }}
@@ -946,7 +947,7 @@ const EnhancedLogin = () => {
                 <span className="font-semibold">Alex Rivera</span> • Tech Lead
               </div>
             </div>
-            <motion.p 
+            <motion.p
               className="text-white/90 leading-relaxed"
               animate={{ opacity: isTyping ? 1 : 0.9 }}
             >
